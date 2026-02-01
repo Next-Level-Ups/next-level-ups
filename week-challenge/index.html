@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meu Cofre - Desafio 52 Semanas</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwindcss.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#ecfdf5',
+              100: '#d1fae5',
+              200: '#a7f3d0',
+              300: '#6ee7b7',
+              400: '#34d399',
+              500: '#10b981',
+              600: '#059669',
+              700: '#047857',
+              800: '#065f46',
+              900: '#064e3b',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { font-family: 'Plus Jakarta Sans', sans-serif; }
+    html { scroll-behavior: smooth; }
+    .hero-gradient { background: linear-gradient(180deg, #ecfdf5 0%, #ffffff 100%); }
+    .card-shadow { box-shadow: 0 4px 24px rgba(0,0,0,0.06); }
+    .card-shadow:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.1); }
+    .phone-frame {
+      background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+      border-radius: 3rem;
+      padding: 0.5rem;
+    }
+    .phone-screen {
+      background: #fff;
+      border-radius: 2.5rem;
+      overflow: hidden;
+    }
+    .phone-notch {
+      width: 40%;
+      height: 24px;
+      background: #1f2937;
+      border-radius: 0 0 1rem 1rem;
+      margin: 0 auto;
+    }
+    .animate-float {
+      animation: float 6s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+    }
+    .fade-up {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body class="bg-white text-gray-800 antialiased">
+
+  <header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        <a href="#" class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-2xl bg-brand-600 flex items-center justify-center shadow-lg shadow-brand-600/30">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+          </div>
+          <span class="font-extrabold text-xl text-gray-900">Meu Cofre - Desafio 52 Semanas</span>
+        </a>
+        
+        <nav class="hidden lg:flex items-center gap-10">
+          <a href="#recursos" class="text-sm font-semibold text-gray-600 hover:text-brand-600 transition-colors">Recursos</a>
+          <a href="#como-funciona" class="text-sm font-semibold text-gray-600 hover:text-brand-600 transition-colors">Como Funciona</a>
+          <a href="#modos" class="text-sm font-semibold text-gray-600 hover:text-brand-600 transition-colors">Modos</a>
+          <a href="#faq" class="text-sm font-semibold text-gray-600 hover:text-brand-600 transition-colors">Duvidas</a>
+        </nav>
+
+        <div class="flex items-center gap-4">
+          <a href="#download" class="hidden sm:inline-flex items-center justify-center px-6 py-3 bg-brand-600 text-white text-sm font-bold rounded-full hover:bg-brand-700 transition-all shadow-lg shadow-brand-600/30 hover:shadow-brand-600/40 hover:-translate-y-0.5">
+            Baixar Gratis
+          </a>
+          <button id="menu-btn" class="lg:hidden p-2 rounded-xl hover:bg-gray-100 transition-colors">
+            <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <div id="mobile-menu" class="hidden lg:hidden bg-white border-t border-gray-100 shadow-lg">
+      <div class="px-4 py-6 space-y-4">
+        <a href="#recursos" class="block py-3 px-4 rounded-xl text-gray-700 font-medium hover:bg-gray-50">Recursos</a>
+        <a href="#como-funciona" class="block py-3 px-4 rounded-xl text-gray-700 font-medium hover:bg-gray-50">Como Funciona</a>
+        <a href="#modos" class="block py-3 px-4 rounded-xl text-gray-700 font-medium hover:bg-gray-50">Modos</a>
+        <a href="#faq" class="block py-3 px-4 rounded-xl text-gray-700 font-medium hover:bg-gray-50">Duvidas</a>
+        <a href="#download" class="block w-full text-center py-4 bg-brand-600 text-white font-bold rounded-full mt-4">Baixar Gratis</a>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero-gradient pt-32 pb-20 lg:pt-40 lg:pb-32 overflow-hidden">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid lg:grid-cols-2 gap-12 lg:gap-8 items-center">
+        <div class="text-center lg:text-left">
+          <div class="inline-flex items-center gap-2 px-4 py-2 bg-brand-100 rounded-full text-brand-700 text-sm font-semibold mb-6">
+            <span class="w-2 h-2 bg-brand-500 rounded-full animate-pulse"></span>
+            Mais de 50.000 downloads
+          </div>
+          
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-gray-900 leading-tight mb-6">
+            Economize de forma
+            <span class="text-brand-600 block">simples e divertida</span>
+          </h1>
+          
+          <p class="text-lg sm:text-xl text-gray-500 mb-10 max-w-lg mx-auto lg:mx-0 leading-relaxed">
+            Transforme o habito de poupar em um desafio empolgante. Acumule ate <strong class="text-gray-700">R$ 1.378</strong> em apenas 52 semanas.
+          </p>
+          
+          <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+            <!-- <a href="#download" class="group inline-flex items-center justify-center gap-3 px-8 py-4 bg-gray-900 text-white font-bold rounded-2xl hover:bg-gray-800 transition-all shadow-xl shadow-gray-900/20">
+              <svg class="w-7 h-7" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/>
+              </svg>
+              <div class="text-left">
+                <p class="text-xs text-gray-400">Baixar na</p>
+                <p class="text-base font-bold -mt-0.5">App Store</p>
+              </div>
+            </a> -->
+            <a href="#download" class="group inline-flex items-center justify-center gap-3 px-8 py-4 bg-brand-600 text-white font-bold rounded-2xl hover:bg-brand-700 transition-all shadow-xl shadow-brand-600/30">
+              <svg class="w-7 h-7" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 01-.61-.92V2.734a1 1 0 01.609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.198l2.807 1.626a1 1 0 010 1.73l-2.808 1.626L15.206 12l2.492-2.491zM5.864 2.658L16.802 8.99l-2.303 2.303-8.635-8.635z"/>
+              </svg>
+              <div class="text-left">
+                <p class="text-xs text-brand-200">Disponivel no</p>
+                <p class="text-base font-bold -mt-0.5">Google Play</p>
+              </div>
+            </a>
+          </div>
+          
+          <div class="flex items-center justify-center lg:justify-start gap-6 mt-10">
+            <div class="flex -space-x-3">
+              <div class="w-10 h-10 rounded-full bg-brand-200 border-2 border-white flex items-center justify-center text-brand-700 font-bold text-sm">M</div>
+              <div class="w-10 h-10 rounded-full bg-blue-200 border-2 border-white flex items-center justify-center text-blue-700 font-bold text-sm">J</div>
+              <div class="w-10 h-10 rounded-full bg-amber-200 border-2 border-white flex items-center justify-center text-amber-700 font-bold text-sm">A</div>
+              <div class="w-10 h-10 rounded-full bg-rose-200 border-2 border-white flex items-center justify-center text-rose-700 font-bold text-sm">C</div>
+            </div>
+            <div class="text-left">
+              <div class="flex items-center gap-1 text-amber-500">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+              </div>
+              <!-- <p class="text-sm text-gray-500 mt-0.5">4.8 de 2.340 avaliacoes</p> -->
+            </div>
+          </div>
+        </div>
+        
+        <div class="flex justify-center lg:justify-end">
+          <div class="phone-frame w-72 sm:w-80 animate-float shadow-2xl">
+            <div class="phone-screen">
+              <div class="phone-notch"></div>
+              <div class="bg-brand-600 px-6 py-8 text-white">
+                <div class="flex items-center justify-between mb-4">
+                  <p class="text-sm font-medium text-brand-200">Seu progresso</p>
+                  <span class="text-xs bg-white/20 px-3 py-1 rounded-full">Semana 32</span>
+                </div>
+                <p class="text-4xl font-extrabold">R$ 820,00</p>
+                <p class="text-sm text-brand-200 mt-1">de R$ 1.378,00</p>
+                <div class="mt-4 bg-white/20 rounded-full h-2">
+                  <div class="bg-white h-2 rounded-full" style="width: 59%"></div>
+                </div>
+                <p class="text-xs text-brand-200 mt-2 text-right">59% completo</p>
+              </div>
+              <div class="p-6">
+                <div class="flex items-center justify-between mb-4">
+                  <span class="text-sm font-semibold text-gray-800">Proxima semana</span>
+                  <span class="text-xs text-gray-400">Vence em 3 dias</span>
+                </div>
+                <div class="bg-gray-50 rounded-2xl p-4 flex items-center justify-between">
+                  <div>
+                    <p class="text-2xl font-bold text-gray-900">R$ 33,00</p>
+                    <p class="text-xs text-gray-400">Semana 33</p>
+                  </div>
+                  <button class="px-5 py-3 bg-brand-600 text-white text-sm font-bold rounded-xl shadow-lg shadow-brand-600/30">
+                    Depositar
+                  </button>
+                </div>
+                <div class="mt-6">
+                  <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">Historico recente</p>
+                  <div class="space-y-3">
+                    <div class="flex items-center justify-between py-2">
+                      <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 bg-brand-100 rounded-lg flex items-center justify-center">
+                          <svg class="w-4 h-4 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"/></svg>
+                        </div>
+                        <span class="text-sm text-gray-700">Semana 32</span>
+                      </div>
+                      <span class="text-sm font-semibold text-gray-900">R$ 32,00</span>
+                    </div>
+                    <div class="flex items-center justify-between py-2">
+                      <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 bg-brand-100 rounded-lg flex items-center justify-center">
+                          <svg class="w-4 h-4 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"/></svg>
+                        </div>
+                        <span class="text-sm text-gray-700">Semana 31</span>
+                      </div>
+                      <span class="text-sm font-semibold text-gray-900">R$ 31,00</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="recursos" class="py-24 bg-white">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto mb-16 fade-up">
+        <span class="text-brand-600 font-bold text-sm uppercase tracking-wider">Recursos</span>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-gray-900 mt-4 mb-6">
+          Tudo para voce poupar
+        </h2>
+        <p class="text-lg text-gray-500 leading-relaxed">
+          Funcionalidades pensadas para tornar sua jornada de economia mais facil e motivadora.
+        </p>
+      </div>
+      
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="fade-up group bg-white border border-gray-100 rounded-3xl p-8 card-shadow transition-all hover:-translate-y-1">
+          <div class="w-16 h-16 bg-brand-100 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-brand-600 transition-colors">
+            <svg class="w-8 h-8 text-brand-600 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 mb-3">Dashboard Inteligente</h3>
+          <p class="text-gray-500 leading-relaxed">Acompanhe seu progresso em tempo real com graficos claros e objetivos.</p>
+        </div>
+        
+        <div class="fade-up group bg-white border border-gray-100 rounded-3xl p-8 card-shadow transition-all hover:-translate-y-1" style="transition-delay: 0.1s">
+          <div class="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-blue-600 transition-colors">
+            <svg class="w-8 h-8 text-blue-600 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 mb-3">Multi-Moedas</h3>
+          <p class="text-gray-500 leading-relaxed">Suporte a mais de 15 moedas. Use o app em qualquer lugar do mundo.</p>
+        </div>
+        
+        <div class="fade-up group bg-white border border-gray-100 rounded-3xl p-8 card-shadow transition-all hover:-translate-y-1" style="transition-delay: 0.2s">
+          <div class="w-16 h-16 bg-amber-100 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-amber-500 transition-colors">
+            <svg class="w-8 h-8 text-amber-600 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 mb-3">100% Personalizavel</h3>
+          <p class="text-gray-500 leading-relaxed">Configure valor inicial, modo de desafio e adapte ao seu orcamento.</p>
+        </div>
+        
+        <div class="fade-up group bg-white border border-gray-100 rounded-3xl p-8 card-shadow transition-all hover:-translate-y-1" style="transition-delay: 0.3s">
+          <div class="w-16 h-16 bg-rose-100 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-rose-500 transition-colors">
+            <svg class="w-8 h-8 text-rose-500 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 mb-3">Depositos Extras</h3>
+          <p class="text-gray-500 leading-relaxed">Recebeu um bonus? Adicione depositos extras e acelere sua meta.</p>
+        </div>
+        
+        <div class="fade-up group bg-white border border-gray-100 rounded-3xl p-8 card-shadow transition-all hover:-translate-y-1" style="transition-delay: 0.4s">
+          <div class="w-16 h-16 bg-violet-100 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-violet-500 transition-colors">
+            <svg class="w-8 h-8 text-violet-500 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 mb-3">Lembretes Inteligentes</h3>
+          <p class="text-gray-500 leading-relaxed">Notificacoes personalizadas para nunca esquecer seus depositos.</p>
+        </div>
+        
+        <div class="fade-up group bg-white border border-gray-100 rounded-3xl p-8 card-shadow transition-all hover:-translate-y-1" style="transition-delay: 0.5s">
+          <div class="w-16 h-16 bg-teal-100 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-teal-500 transition-colors">
+            <svg class="w-8 h-8 text-teal-500 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 mb-3">Conquistas e Badges</h3>
+          <p class="text-gray-500 leading-relaxed">Desbloqueie conquistas e mantenha-se motivado durante o desafio.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="como-funciona" class="py-24 bg-gray-50">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto mb-16 fade-up">
+        <span class="text-brand-600 font-bold text-sm uppercase tracking-wider">Como Funciona</span>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-gray-900 mt-4 mb-6">
+          Comece em 3 passos
+        </h2>
+        <p class="text-lg text-gray-500 leading-relaxed">
+          Em poucos minutos voce estara pronto para transformar sua vida financeira.
+        </p>
+      </div>
+      
+      <div class="grid md:grid-cols-3 gap-8 lg:gap-12">
+        <div class="fade-up text-center relative">
+          <div class="w-20 h-20 bg-brand-600 rounded-3xl flex items-center justify-center mx-auto mb-8 text-white text-3xl font-extrabold shadow-xl shadow-brand-600/30">
+            1
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 mb-4">Escolha seu modo</h3>
+          <p class="text-gray-500 leading-relaxed">Selecione entre Tradicional, Reverso ou Ciclico conforme sua preferencia.</p>
+          <div class="hidden md:block absolute top-10 left-[60%] w-[80%] border-t-2 border-dashed border-gray-300"></div>
+        </div>
+        
+        <div class="fade-up text-center relative" style="transition-delay: 0.1s">
+          <div class="w-20 h-20 bg-brand-600 rounded-3xl flex items-center justify-center mx-auto mb-8 text-white text-3xl font-extrabold shadow-xl shadow-brand-600/30">
+            2
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 mb-4">Configure seu valor</h3>
+          <p class="text-gray-500 leading-relaxed">Defina o valor inicial que cabe no seu bolso. A partir de R$ 1,00.</p>
+          <div class="hidden md:block absolute top-10 left-[60%] w-[80%] border-t-2 border-dashed border-gray-300"></div>
+        </div>
+        
+        <div class="fade-up text-center" style="transition-delay: 0.2s">
+          <div class="w-20 h-20 bg-brand-600 rounded-3xl flex items-center justify-center mx-auto mb-8 text-white text-3xl font-extrabold shadow-xl shadow-brand-600/30">
+            3
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 mb-4">Acompanhe e celebre</h3>
+          <p class="text-gray-500 leading-relaxed">Marque suas semanas, veja seu progresso e celebre cada conquista.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="modos" class="py-24 bg-white">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto mb-16 fade-up">
+        <span class="text-brand-600 font-bold text-sm uppercase tracking-wider">Modos de Desafio</span>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-gray-900 mt-4 mb-6">
+          Escolha sua estrategia
+        </h2>
+        <p class="text-lg text-gray-500 leading-relaxed">
+          Tres modos diferentes para se adaptar ao seu estilo de poupanca.
+        </p>
+      </div>
+      
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="fade-up group relative overflow-hidden bg-gradient-to-br from-brand-500 to-brand-700 rounded-3xl p-8 text-white card-shadow transition-all hover:-translate-y-2">
+          <div class="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2"></div>
+          <div class="relative">
+            <div class="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center mb-6 backdrop-blur-sm">
+              <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+              </svg>
+            </div>
+            <span class="inline-block px-3 py-1 bg-white/20 rounded-full text-xs font-semibold mb-4">Mais Popular</span>
+            <h3 class="text-2xl font-extrabold mb-3">Tradicional</h3>
+            <p class="text-brand-100 mb-6 leading-relaxed">Comece com valores menores e aumente gradualmente a cada semana.</p>
+            <div class="bg-white/10 rounded-2xl p-5 backdrop-blur-sm">
+              <p class="text-sm text-brand-200 mb-2">Exemplo com R$ 1,00</p>
+              <div class="flex items-center justify-between text-xs text-brand-300 mb-3">
+                <span>Sem 1: R$ 1</span>
+                <span>...</span>
+                <span>Sem 52: R$ 52</span>
+              </div>
+              <p class="text-2xl font-extrabold">Total: R$ 1.378</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="fade-up group relative overflow-hidden bg-gradient-to-br from-blue-500 to-blue-700 rounded-3xl p-8 text-white card-shadow transition-all hover:-translate-y-2" style="transition-delay: 0.1s">
+          <div class="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2"></div>
+          <div class="relative">
+            <div class="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center mb-6 backdrop-blur-sm">
+              <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6"/>
+              </svg>
+            </div>
+            <span class="inline-block px-3 py-1 bg-white/20 rounded-full text-xs font-semibold mb-4">Alta Motivacao</span>
+            <h3 class="text-2xl font-extrabold mb-3">Reverso</h3>
+            <p class="text-blue-100 mb-6 leading-relaxed">Comece com valores maiores enquanto a motivacao esta no auge.</p>
+            <div class="bg-white/10 rounded-2xl p-5 backdrop-blur-sm">
+              <p class="text-sm text-blue-200 mb-2">Exemplo com R$ 1,00</p>
+              <div class="flex items-center justify-between text-xs text-blue-300 mb-3">
+                <span>Sem 1: R$ 52</span>
+                <span>...</span>
+                <span>Sem 52: R$ 1</span>
+              </div>
+              <p class="text-2xl font-extrabold">Total: R$ 1.378</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="fade-up group relative overflow-hidden bg-gradient-to-br from-violet-500 to-violet-700 rounded-3xl p-8 text-white card-shadow transition-all hover:-translate-y-2" style="transition-delay: 0.2s">
+          <div class="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2"></div>
+          <div class="relative">
+            <div class="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center mb-6 backdrop-blur-sm">
+              <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+              </svg>
+            </div>
+            <span class="inline-block px-3 py-1 bg-white/20 rounded-full text-xs font-semibold mb-4">Equilibrado</span>
+            <h3 class="text-2xl font-extrabold mb-3">Ciclico</h3>
+            <p class="text-violet-100 mb-6 leading-relaxed">Alterne entre valores altos e baixos para manter o equilibrio.</p>
+            <div class="bg-white/10 rounded-2xl p-5 backdrop-blur-sm">
+              <p class="text-sm text-violet-200 mb-2">Exemplo com R$ 1,00</p>
+              <div class="flex items-center justify-between text-xs text-violet-300 mb-3">
+                <span>Sem 1: R$ 52</span>
+                <span>Sem 2: R$ 1</span>
+                <span>...</span>
+              </div>
+              <p class="text-2xl font-extrabold">Total: R$ 1.378</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-24 bg-gray-50">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto mb-12 fade-up">
+        <span class="text-brand-600 font-bold text-sm uppercase tracking-wider">Simulador</span>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-gray-900 mt-4 mb-6">
+          Calcule sua economia
+        </h2>
+        <p class="text-lg text-gray-500 leading-relaxed">
+          Veja quanto voce pode acumular ao final do desafio.
+        </p>
+      </div>
+      
+      <div class="fade-up bg-white rounded-3xl p-8 sm:p-10 card-shadow">
+        <div class="mb-10">
+          <label class="block text-sm font-bold text-gray-700 mb-4">Valor inicial por semana</label>
+          <div class="flex items-center gap-6">
+            <span class="text-gray-400 font-medium text-lg">R$</span>
+            <input type="range" id="calc-slider" min="1" max="20" value="1" class="flex-1 h-3 bg-gray-200 rounded-full appearance-none cursor-pointer accent-brand-600">
+            <span id="calc-value" class="text-3xl font-extrabold text-brand-600 w-20 text-right">1,00</span>
+          </div>
+        </div>
+        
+        <div class="grid sm:grid-cols-2 gap-6">
+          <div class="bg-brand-50 rounded-2xl p-8 text-center border-2 border-brand-100">
+            <p class="text-sm font-semibold text-brand-600 uppercase tracking-wider mb-2">Total ao final</p>
+            <p id="calc-total" class="text-4xl sm:text-5xl font-extrabold text-brand-700">R$ 1.378</p>
+            <p class="text-sm text-brand-500 mt-2">em 52 semanas</p>
+          </div>
+          <div class="bg-gray-100 rounded-2xl p-8 text-center">
+            <p class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Media semanal</p>
+            <p id="calc-avg" class="text-4xl sm:text-5xl font-extrabold text-gray-700">R$ 26,50</p>
+            <p class="text-sm text-gray-500 mt-2">por semana</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq" class="py-24 bg-white">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto mb-16 fade-up">
+        <span class="text-brand-600 font-bold text-sm uppercase tracking-wider">Duvidas</span>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-gray-900 mt-4 mb-6">
+          Perguntas frequentes
+        </h2>
+      </div>
+      
+      <div class="space-y-4 fade-up">
+        <div class="faq-item border border-gray-200 rounded-2xl overflow-hidden transition-all">
+          <button class="faq-btn w-full flex items-center justify-between p-6 text-left hover:bg-gray-50 transition-colors">
+            <span class="font-bold text-gray-900 pr-4">O app e gratuito?</span>
+            <svg class="faq-chevron w-5 h-5 text-gray-400 transition-transform flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"/>
+            </svg>
+          </button>
+          <div class="faq-answer hidden px-6 pb-6">
+            <p class="text-gray-500 leading-relaxed">Sim! O Meu Cofre - Desafio 52 Semanas e totalmente gratuito para download e uso. Todas as funcionalidades principais estao disponiveis sem custo algum.</p>
+          </div>
+        </div>
+        
+        <div class="faq-item border border-gray-200 rounded-2xl overflow-hidden transition-all">
+          <button class="faq-btn w-full flex items-center justify-between p-6 text-left hover:bg-gray-50 transition-colors">
+            <span class="font-bold text-gray-900 pr-4">Posso usar qualquer moeda?</span>
+            <svg class="faq-chevron w-5 h-5 text-gray-400 transition-transform flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"/>
+            </svg>
+          </button>
+          <div class="faq-answer hidden px-6 pb-6">
+            <p class="text-gray-500 leading-relaxed">Sim! O app suporta mais de 15 moedas diferentes, incluindo Real (BRL), Dolar (USD), Euro (EUR), Libra (GBP), e muitas outras.</p>
+          </div>
+        </div>
+        
+        <div class="faq-item border border-gray-200 rounded-2xl overflow-hidden transition-all">
+          <button class="faq-btn w-full flex items-center justify-between p-6 text-left hover:bg-gray-50 transition-colors">
+            <span class="font-bold text-gray-900 pr-4">Posso comecar a qualquer momento?</span>
+            <svg class="faq-chevron w-5 h-5 text-gray-400 transition-transform flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"/>
+            </svg>
+          </button>
+          <div class="faq-answer hidden px-6 pb-6">
+            <p class="text-gray-500 leading-relaxed">Claro! Voce pode iniciar seu desafio a qualquer momento do ano. O app acompanha suas 52 semanas a partir da data que voce escolher.</p>
+          </div>
+        </div>
+        
+        <div class="faq-item border border-gray-200 rounded-2xl overflow-hidden transition-all">
+          <button class="faq-btn w-full flex items-center justify-between p-6 text-left hover:bg-gray-50 transition-colors">
+            <span class="font-bold text-gray-900 pr-4">Meus dados ficam salvos?</span>
+            <svg class="faq-chevron w-5 h-5 text-gray-400 transition-transform flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"/>
+            </svg>
+          </button>
+          <div class="faq-answer hidden px-6 pb-6">
+            <p class="text-gray-500 leading-relaxed">Sim! Seus dados sao armazenados de forma segura no seu dispositivo. Voce tambem pode exportar seus dados para backup a qualquer momento.</p>
+          </div>
+        </div>
+        
+        <div class="faq-item border border-gray-200 rounded-2xl overflow-hidden transition-all">
+          <button class="faq-btn w-full flex items-center justify-between p-6 text-left hover:bg-gray-50 transition-colors">
+            <span class="font-bold text-gray-900 pr-4">Posso ter varios desafios simultaneos?</span>
+            <svg class="faq-chevron w-5 h-5 text-gray-400 transition-transform flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"/>
+            </svg>
+          </button>
+          <div class="faq-answer hidden px-6 pb-6">
+            <p class="text-gray-500 leading-relaxed">Sim! Voce pode criar multiplos desafios com diferentes configuracoes, modos e moedas. Ideal para separar metas como viagens, emergencias ou investimentos.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="download" class="py-24 bg-gradient-to-br from-brand-600 to-brand-800 relative overflow-hidden">
+    <div class="absolute inset-0 opacity-10">
+      <div class="absolute top-0 left-0 w-96 h-96 bg-white rounded-full -translate-x-1/2 -translate-y-1/2"></div>
+      <div class="absolute bottom-0 right-0 w-96 h-96 bg-white rounded-full translate-x-1/2 translate-y-1/2"></div>
+    </div>
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative">
+      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white mb-6">
+        Comece hoje mesmo
+      </h2>
+      <p class="text-xl text-brand-100 mb-10 max-w-2xl mx-auto leading-relaxed">
+        Junte-se a milhares de pessoas que ja estao transformando suas vidas financeiras com o Poupe52.
+      </p>
+      
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <!-- <a href="#" class="inline-flex items-center justify-center gap-4 px-8 py-5 bg-white text-gray-900 font-bold rounded-2xl hover:bg-gray-100 transition-all shadow-xl hover:-translate-y-1">
+          <svg class="w-9 h-9" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/>
+          </svg>
+          <div class="text-left">
+            <p class="text-xs text-gray-500">Baixar na</p>
+            <p class="text-lg font-extrabold -mt-0.5">App Store</p>
+          </div>
+        </a> -->
+        <a href="#" class="inline-flex items-center justify-center gap-4 px-8 py-5 bg-gray-900 text-white font-bold rounded-2xl hover:bg-gray-800 transition-all shadow-xl hover:-translate-y-1">
+          <svg class="w-9 h-9" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 01-.61-.92V2.734a1 1 0 01.609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.198l2.807 1.626a1 1 0 010 1.73l-2.808 1.626L15.206 12l2.492-2.491zM5.864 2.658L16.802 8.99l-2.303 2.303-8.635-8.635z"/>
+          </svg>
+          <div class="text-left">
+            <p class="text-xs text-gray-400">Disponivel no</p>
+            <p class="text-lg font-extrabold -mt-0.5">Google Play</p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-16 bg-gray-900 text-gray-400">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid md:grid-cols-4 gap-10 mb-12">
+        <div class="md:col-span-2">
+          <div class="flex items-center gap-3 mb-6">
+            <div class="w-10 h-10 rounded-2xl bg-brand-600 flex items-center justify-center">
+              <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+            </div>
+            <span class="font-extrabold text-xl text-white">Meu Cofre - Desafio 52 Semanas</span>
+          </div>
+          <p class="text-sm leading-relaxed max-w-xs">Transforme o habito de poupar em um desafio empolgante e alcance seus objetivos financeiros com facilidade.</p>
+        </div>
+        
+        <div>
+          <h4 class="font-bold text-white mb-6">Links</h4>
+          <ul class="space-y-4 text-sm">
+            <li><a href="#recursos" class="hover:text-brand-400 transition-colors">Recursos</a></li>
+            <li><a href="#como-funciona" class="hover:text-brand-400 transition-colors">Como Funciona</a></li>
+            <li><a href="#modos" class="hover:text-brand-400 transition-colors">Modos</a></li>
+            <li><a href="#faq" class="hover:text-brand-400 transition-colors">Duvidas</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h4 class="font-bold text-white mb-6">Legal</h4>
+          <ul class="space-y-4 text-sm">
+            <li><a href="~/termos.html" class="hover:text-brand-400 transition-colors">Termos de Uso</a></li>
+            <li><a href="~/politica.html" class="hover:text-brand-400 transition-colors">Privacidade</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="border-t border-gray-800 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <p class="text-sm">2026 Meu Cofre - Desafio 52 Semanas. Todos os direitos reservados.</p>
+        <div class="flex items-center gap-5">
+          <a href="#" class="hover:text-brand-400 transition-colors">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg>
+          </a>
+          <a href="#" class="hover:text-brand-400 transition-colors">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu
+    const menuBtn = document.getElementById('menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    
+    menuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+
+    document.querySelectorAll('#mobile-menu a').forEach(link => {
+      link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+    });
+
+    // Header scroll effect
+    const header = document.getElementById('header');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        header.classList.add('bg-white/95', 'backdrop-blur-lg', 'shadow-sm');
+      } else {
+        header.classList.remove('bg-white/95', 'backdrop-blur-lg', 'shadow-sm');
+      }
+    });
+
+    // Calculator
+    const slider = document.getElementById('calc-slider');
+    const calcValue = document.getElementById('calc-value');
+    const calcTotal = document.getElementById('calc-total');
+    const calcAvg = document.getElementById('calc-avg');
+
+    slider.addEventListener('input', () => {
+      const val = parseInt(slider.value);
+      const total = val * 1378;
+      const avg = total / 52;
+      
+      calcValue.textContent = val.toFixed(2).replace('.', ',');
+      calcTotal.textContent = 'R$ ' + total.toLocaleString('pt-BR');
+      calcAvg.textContent = 'R$ ' + avg.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    });
+
+    // FAQ
+    document.querySelectorAll('.faq-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.parentElement;
+        const answer = item.querySelector('.faq-answer');
+        const chevron = item.querySelector('.faq-chevron');
+        
+        answer.classList.toggle('hidden');
+        chevron.style.transform = answer.classList.contains('hidden') ? 'rotate(0deg)' : 'rotate(180deg)';
+      });
+    });
+
+    // Scroll animations
+    const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
